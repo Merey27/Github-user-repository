@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ServiceService} from '../../services/service.service';
+import {UserInfo} from '../../interfaces/interface';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-base-user-info',
@@ -8,23 +10,15 @@ import {ServiceService} from '../../services/service.service';
 })
 export class BaseUserInfoComponent implements OnInit {
 
-  mainUserInfo;
-  reposNumber;
-  userInfo;
+  mainUserInfo$: Observable<UserInfo>;
 
-    constructor(
+  constructor(
     private service: ServiceService
   ) {
-      this.service.getLocalStorage();
-    }
+  }
 
   ngOnInit(): void {
-    this.service.userInfo.subscribe((data) => {
-      this.userInfo = data;
-      this.reposNumber = this.userInfo.length;
-      const ownerInfo = [...new Map(this.userInfo.map(user => [user.owner.login, user.owner])).values()];
-      this.mainUserInfo = ownerInfo[0];
-    });
+    this.mainUserInfo$ = this.service.userInfo$;
   }
 
 }

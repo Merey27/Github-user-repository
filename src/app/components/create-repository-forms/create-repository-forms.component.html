@@ -1,1 +1,48 @@
-<p>create-repository-forms works!</p>
+<div class="modal-header">
+  <h4 class="modal-title">Create repository</h4>
+  <button type="button" class="close" aria-label="Close" (click)="this.activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+
+  <form [formGroup]="form">
+    <div class="mb-3">
+      <label for="name" class="col-form-label">Repository name</label>
+      <input id="name" formControlName="name" type="text" class="form-control">
+      <div *ngIf="form.get('name').touched && form.get('name').invalid" class="text-danger">
+        <small class="form-text">Fill repository name</small>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="url" class="col-form-label">Repository url</label>
+      <input id="url" formControlName="html_url" type="text" class="form-control">
+      <div *ngIf="form.get('html_url').touched && form.get('html_url').invalid" class="text-danger">
+        <small class="form-text">Fill repository url</small>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="col-form-label">Repository description</label>
+      <input id="description" formControlName="description" type="text" class="form-control">
+      <div *ngIf="form.get('description').touched && form.get('description').invalid" class="text-danger">
+        <small class="form-text">Fill repository description</small>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="language" class="col-form-label">Main language</label>
+      <input id="language" formControlName="language" type="text" class="form-control">
+      <div *ngIf="form.get('language').touched && form.get('language').invalid" class="text-danger">
+        <small class="form-text">Fill repository main language</small>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="submit" (click)="submit()"
+          [disabled]="form.invalid" class="btn btn-outline-dark">Save</button>
+</div>

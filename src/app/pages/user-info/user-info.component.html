@@ -1,10 +1,34 @@
-<nav class="navbar main">
-  <h1>Github user repositories</h1>
+<nav class="navbar navbar-light bg-light mb-4">
+  <div class="container-fluid">
+    <span class="navbar-brand mb-0 h1">
+          <bi class="mr-2" name="person-circle"></bi>Github user repositories</span>
+  </div>
+  <h1></h1>
 </nav>
 
 <div class="search-user">
-  <input type="text">
-  <button type="submit">Search</button>
+  <input class="form-control mr-1" [formControl]="userName" placeholder="User login" type="text">
+  <button class="btn btn-primary" (click)="searchUser()" type="submit">Search</button>
 </div>
+
+<div class="container-lg mt-2 mt-lg-4" *ngIf="(isUserInfo$ | async); else initial">
+  <ngb-alert *ngIf="(error$ | async)" [dismissible]="false" type="danger" class="w-50 mx-auto">
+    User not found
+  </ngb-alert>
+  <div class="row">
+    <div class="col-12 col-md-3 mb-3">
+      <app-base-user-info></app-base-user-info>
+    </div>
+    <div class="col-12 col-md-9">
+      <app-repository-info></app-repository-info>
+    </div>
+  </div>
+</div>
+
+<ng-template #initial>
+  <ngb-alert class="w-50 mx-auto mt-4" [dismissible]="false">
+    Set user login to find repositories.
+  </ngb-alert>
+</ng-template>
 
 <router-outlet></router-outlet>

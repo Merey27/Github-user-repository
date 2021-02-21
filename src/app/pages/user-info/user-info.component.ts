@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ServiceService} from '../../services/service.service';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-user-info',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserInfoComponent implements OnInit {
 
-  constructor() { }
+  isUserInfo$;
+  error$;
+  userName = new FormControl('');
 
-  ngOnInit(): void {
+  constructor(
+    private service: ServiceService
+  ) {
+    this.service.getSessionStorage();
   }
 
+  ngOnInit(
+  ): void {
+    this.isUserInfo$ = this.service.userInfo$;
+    this.error$ = this.service.error$;
+  }
+
+  searchUser(): void {
+    this.service.setUserName(this.userName.value);
+  }
 }

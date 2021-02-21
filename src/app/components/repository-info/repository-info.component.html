@@ -1,28 +1,37 @@
-<div class="table-responsive">
-  <table class="table">
+<div class="select mb-4" *ngIf="(repositoryInfo$ | async).uniqueLanguages as categories">
+  <div ngbDropdown class="d-inline-block">
+    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Category</button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+      <button ngbDropdownItem (click)="sendCategory('All')" >All</button>
+      <button *ngFor="let category of categories" (click)="sendCategory(category)"  ngbDropdownItem>{{category}}</button>
+    </div>
+  </div>
+</div>
+
+<div class="table-responsive" *ngIf="(repositoryInfo$ | async).fullInfo | filter: categoryValue as repositoryInfo">
+  <table class="table table-fixed table-striped">
     <thead>
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Name
-          <bi *ngIf="!isDown" (click)="isDown=true" name="arrow-down" [appSort]="repositoryInfo" data-order="desc" data-name="name"></bi>
-          <bi *ngIf="isDown" (click)="isDown=false" name="arrow-up" [appSort]="repositoryInfo" data-order="asc" data-name="name"></bi>
+          <bi class="big" *ngIf="!isDownName" (click)="isDownName=true" name="arrow-down" [appSort]="repositoryInfo" data-order="desc" data-name="name"></bi>
+          <bi *ngIf="isDownName" (click)="isDownName=false" name="arrow-up" [appSort]="repositoryInfo" data-order="asc" data-name="name"></bi>
         </th>
         <th scope="col">URL</th>
-        <th scope="col">Description</th>
+        <th scope="col">Language</th>
         <th scope="col">Created at
-          <bi *ngIf="!isDown" (click)="isDown=true" name="arrow-down" [appSort]="repositoryInfo" data-order="desc" data-name="created_at" data-type="date"></bi>
-          <bi *ngIf="isDown" (click)="isDown=false" name="arrow-up" [appSort]="repositoryInfo" data-order="asc" data-name="created_at" data-type="date"></bi>
+          <bi *ngIf="!isDownTime" (click)="isDownTime=true" name="arrow-down" [appSort]="repositoryInfo" data-order="desc" data-name="created_at" data-type="date"></bi>
+          <bi *ngIf="isDownTime" (click)="isDownTime=false" name="arrow-up" [appSort]="repositoryInfo" data-order="asc" data-name="created_at" data-type="date"></bi>
         </th>
+        <th><button (click)="createRepos()" class="btn"><bi name="plus"></bi></button></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let repository of repositoryInfo; index as i">
-        <th scope="row">{{ i + 1}}</th>
+      <tr *ngFor="let repository of (repositoryInfo )">
         <td>{{ repository.name}}</td>
-        <td><a href="{{repository.url}}">{{ repository.url}}</a></td>
-        <td>{{ repository.description}}</td>
-        <td>{{ repository.created_at | date: 'medium'}}</td>
-
+        <td><a href="{{repository.html_url}}" target="_blank">{{ repository.html_url}}</a></td>
+        <td>{{ repository.language}}</td>
+        <td>{{ repository.created_at | date: 'short'}}</td>
+        <td><button (click)="deleteRepos(repository)" class="btn"><bi name="x"></bi></button></td>
       </tr>
     </tbody>
   </table>

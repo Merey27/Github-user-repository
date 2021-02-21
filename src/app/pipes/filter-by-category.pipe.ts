@@ -1,12 +1,17 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'filterByCategory'
+  name: 'filter'
 })
 export class FilterByCategoryPipe implements PipeTransform {
 
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+  transform(value: any, input: any): any {
+    if (input === 'All') {
+      return value;
+    } else if (input) {
+      return value.filter(val => val.language === input);
+    } else {
+      return value;
+    }
   }
-
 }
