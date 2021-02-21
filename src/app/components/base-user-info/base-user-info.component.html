@@ -1,0 +1,13 @@
+<div class="card" style="width: 20rem">
+  <img src="{{mainUserInfo.avatar_url}}" class="card-img-top" alt="avatar">
+  <div class="card-body">
+    <h4 class="card-title">{{mainUserInfo.login}}</h4>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Number of repositories: {{reposNumber}}</li>
+    <li class="list-group-item">URL:
+      <a href="{{mainUserInfo.html_url}}" target="_blank">
+        {{mainUserInfo.html_url}}</a></li>
+  </ul>
+</div>
+

@@ -1,0 +1,29 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name
+          <bi *ngIf="!isDown" (click)="isDown=true" name="arrow-down" [appSort]="repositoryInfo" data-order="desc" data-name="name"></bi>
+          <bi *ngIf="isDown" (click)="isDown=false" name="arrow-up" [appSort]="repositoryInfo" data-order="asc" data-name="name"></bi>
+        </th>
+        <th scope="col">URL</th>
+        <th scope="col">Description</th>
+        <th scope="col">Created at
+          <bi *ngIf="!isDown" (click)="isDown=true" name="arrow-down" [appSort]="repositoryInfo" data-order="desc" data-name="created_at" data-type="date"></bi>
+          <bi *ngIf="isDown" (click)="isDown=false" name="arrow-up" [appSort]="repositoryInfo" data-order="asc" data-name="created_at" data-type="date"></bi>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let repository of repositoryInfo; index as i">
+        <th scope="row">{{ i + 1}}</th>
+        <td>{{ repository.name}}</td>
+        <td><a href="{{repository.url}}">{{ repository.url}}</a></td>
+        <td>{{ repository.description}}</td>
+        <td>{{ repository.created_at | date: 'medium'}}</td>
+
+      </tr>
+    </tbody>
+  </table>
+</div>
